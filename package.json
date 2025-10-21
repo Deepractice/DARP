@@ -1,0 +1,61 @@
+{
+  "name": "@deepractice/darp",
+  "version": "0.1.0",
+  "description": "Agent Resource Protocol - Universal resource addressing for AI agents",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "turbo build",
+    "test": "turbo test",
+    "test:dev": "turbo test:dev",
+    "test:ci": "turbo test:ci",
+    "lint": "turbo lint",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "clean": "turbo clean && rm -rf node_modules",
+    "typecheck": "turbo typecheck"
+  },
+  "keywords": [
+    "arp",
+    "agent-resource-protocol",
+    "resource-addressing",
+    "ai-agents",
+    "protocol",
+    "parser",
+    "typescript",
+    "monorepo",
+    "deepractice"
+  ],
+  "author": "Deepractice",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Deepractice/DARP"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "packageManager": "pnpm@10.15.1",
+  "devDependencies": {
+    "@commitlint/cli": "^20.1.0",
+    "@commitlint/config-conventional": "^20.0.0",
+    "@deepracticex/config-preset": "^0.1.0",
+    "@deepracticex/vitest-cucumber": "^1.2.0",
+    "@eslint/js": "^9.37.0",
+    "@types/node": "^22.10.6",
+    "@typescript-eslint/eslint-plugin": "^8.46.0",
+    "@typescript-eslint/parser": "^8.46.0",
+    "@vitest/ui": "^3.2.4",
+    "eslint": "^9.37.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "lefthook": "^1.13.6",
+    "prettier": "^3.6.2",
+    "tsup": "^8.5.0",
+    "tsx": "^4.20.6",
+    "turbo": "^2.5.8",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4"
+  }
+}

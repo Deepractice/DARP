@@ -1,0 +1,94 @@
+name: Release
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+
+jobs:
+  release:
+    name: Create Release
+    # Only run if PR was merged and from a release branch
+    if: github.event.pull_request.merged == true && startsWith(github.event.pull_request.head.ref, 'release/')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      version: ${{ steps.extract_version.outputs.version }}
+      tag: ${{ steps.extract_version.outputs.tag }}
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Extract Version Info
+        id: extract_version
+        run: |
+          # Get version from package.json
+          VERSION=$(jq -r '.version' package.json)
+
+          # Create release tag
+          TAG="v${VERSION}"
+
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+          echo "tag=${TAG}" >> $GITHUB_OUTPUT
+
+      - name: Create Git Tag
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag -a ${{ steps.extract_version.outputs.tag }} -m "Release: ${{ steps.extract_version.outputs.tag }}"
+          git push origin ${{ steps.extract_version.outputs.tag }}
+
+      - name: Generate Release Notes
+        id: release_notes
+        run: |
+          # Create release notes
+          cat > release-notes.md << 'NOTES_EOF'
+          # EdgeAuth ${{ steps.extract_version.outputs.version }}
+
+          ## What's Changed
+
+          See [CHANGELOG.md](https://github.com/Deepractice/EdgeAuth/blob/main/CHANGELOG.md) for details.
+
+          ## Deployment
+
+          This release will be automatically deployed to Cloudflare Workers.
+
+          NOTES_EOF
+
+          # Write to GitHub output
+          {
+            echo "notes<<EOF"
+            cat release-notes.md
+            echo "EOF"
+          } >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create ${{ steps.extract_version.outputs.tag }} \
+            --title "EdgeAuth ${{ steps.extract_version.outputs.version }}" \
+            --notes "${{ steps.release_notes.outputs.notes }}" \
+            --latest
+
+      - name: Delete Release Branch
+        run: |
+          BRANCH_NAME="${{ github.event.pull_request.head.ref }}"
+          git push origin --delete "$BRANCH_NAME" || echo "Branch already deleted"

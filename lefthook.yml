@@ -1,0 +1,37 @@
+# Lefthook configuration for DeepracticeInfra
+# https://lefthook.dev/configuration/
+
+commit-msg:
+  commands:
+    commitlint:
+      run: npx commitlint --edit {1}
+
+pre-commit:
+  parallel: true
+  commands:
+    format:
+      glob: "*.{ts,js,cjs,mjs,json,md,yml,yaml}"
+      run: pnpm prettier --write {staged_files}
+      stage_fixed: true
+
+    lint:
+      glob: "*.{ts,js,cjs,mjs}"
+      run: pnpm lint
+
+pre-push:
+  parallel: false
+  commands:
+    install-check:
+      run: pnpm install --frozen-lockfile
+
+    # Temporarily disabled - CI will catch these issues
+    # typecheck:
+    #   run: pnpm typecheck
+
+    # Optional: skip tests and build in pre-push if too slow
+    # CI will catch these issues anyway
+    # test:
+    #   run: pnpm test
+    #
+    # build:
+    #   run: pnpm build
