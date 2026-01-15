@@ -153,9 +153,12 @@ This specification follows [Semantic Versioning](https://semver.org/).
 
 ARP is part of the [Deepractice](https://github.com/Deepractice) AI Agent infrastructure:
 
-- **[ResourceX](https://github.com/Deepractice/ResourceX)** - ARP reference implementation
-- **[PromptX](https://github.com/Deepractice/PromptX)** - AI Agent context management platform (DPML)
-- **[AgentX](https://github.com/Deepractice/AgentX)** - Event-driven AI Agent runtime (DAEP)
+- **[PromptX](https://github.com/Deepractice/PromptX)** - AI Agent context platform
+- **[AgentX](https://github.com/Deepractice/AgentX)** - AI Agent runtime platform
+- **[ResourceX](https://github.com/Deepractice/ResourceX)** - Unified resource manager (ARP)
+- **[ToolX](https://github.com/Deepractice/ToolX)** - Tool integration
+- **[UIX](https://github.com/Deepractice/UIX)** - AI-to-UI protocol layer
+- **[SandboX](https://github.com/Deepractice/SandboX)** - Agent sandbox
 
 ## License
 
