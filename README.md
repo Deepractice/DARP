@@ -149,10 +149,14 @@ This specification follows [Semantic Versioning](https://semver.org/).
 
 **Current Version: 0.1.0**
 
+## Ecosystem
+
+ARP is part of the [Deepractice](https://github.com/Deepractice) AI Agent infrastructure:
+
+- **[ResourceX](https://github.com/Deepractice/ResourceX)** - ARP reference implementation
+- **[PromptX](https://github.com/Deepractice/PromptX)** - AI Agent context management platform (DPML)
+- **[AgentX](https://github.com/Deepractice/AgentX)** - Event-driven AI Agent runtime (DAEP)
+
 ## License
 
 [MIT](./LICENSE)
-
----
-
-*ARP is part of [Deepractice](https://github.com/Deepractice)'s AI development ecosystem.*
